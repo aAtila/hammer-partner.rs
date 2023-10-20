@@ -1,0 +1,13 @@
+{
+  "extends": ["@remix-run/eslint-config", "@remix-run/eslint-config/node", "prettier", "plugin:tailwindcss/recommended" ],
+  "plugins": ["prettier", "tailwindcss"],
+  "rules": {
+        "tailwindcss/classnames-order": "error",
+        "tailwindcss/enforces-negative-arbitrary-values": "off",
+        "tailwindcss/enforces-shorthand": "warn",
+        "tailwindcss/migration-from-tailwind-2": "off",
+        "tailwindcss/no-arbitrary-value": "off",
+        "tailwindcss/no-custom-classname": "off",
+        "tailwindcss/no-contradicting-classname": "error"
+      }
+}
