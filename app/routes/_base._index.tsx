@@ -2,6 +2,8 @@ import type { MetaFunction } from '@remix-run/node';
 import Contact from '~/components/layout/Contact';
 import Hero from '~/components/layout/Hero';
 import { CheckCircleIcon } from 'lucide-react';
+import { Button } from '~/components/ui/button';
+import { Link } from '@remix-run/react';
 
 export const meta: MetaFunction = () => {
 	return [
@@ -211,10 +213,10 @@ export default function Index() {
 										/>
 									</div>
 									<h3 className="mt-6 text-sm text-gray-500">
-										<a href={collection.href}>
-											<span className="absolute inset-0" />
-											{collection.name}
-										</a>
+										{/*<a href={collection.href}>*/}
+										<span className="absolute inset-0" />
+										{collection.name}
+										{/*</a>*/}
 									</h3>
 									<p className="text-base font-semibold text-gray-900">
 										{collection.description}
@@ -256,12 +258,11 @@ export default function Index() {
 							Iskoristite neverovatne popuste na alate i materijale! Ponuda važi
 							samo ovog meseca!
 						</p>
-						<a
-							href="#"
-							className="mt-6 inline-block w-full rounded-md border border-transparent bg-gray-900 px-8 py-3 font-medium text-white hover:bg-gray-800 sm:w-auto"
-						>
-							Kupi odmah
-						</a>
+						<Button size="lg" asChild className="mt-8">
+							<Link to="#contact" className="!text-lg">
+								Kupi Odmah
+							</Link>
+						</Button>
 					</div>
 				</section>
 				{/* Testimonials */}
@@ -327,8 +328,8 @@ export default function Index() {
 							/>
 						</div>
 						<ul role="list" className="mt-8 space-y-8 text-gray-600">
-							{values.map((value) => (
-								<li className="flex gap-x-3">
+							{values.map((value, idx) => (
+								<li key={idx} className="flex gap-x-3">
 									<CheckCircleIcon
 										className="mt-1 h-5 w-5 flex-none text-indigo-600"
 										aria-hidden="true"

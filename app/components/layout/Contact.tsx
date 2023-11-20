@@ -1,4 +1,5 @@
 import { Building2Icon, MailIcon, PhoneIcon } from 'lucide-react';
+import { Button } from '~/components/ui/button';
 
 export default function Example() {
 	return (
@@ -182,12 +183,7 @@ export default function Example() {
 							</div>
 						</div>
 						<div className="mt-8 flex justify-end">
-							<button
-								type="submit"
-								className="rounded-md bg-black px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-							>
-								Pošalji
-							</button>
+							<Button>Pošalji</Button>
 						</div>
 					</div>
 				</form>

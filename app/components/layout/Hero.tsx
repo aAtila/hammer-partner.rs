@@ -1,4 +1,5 @@
 import { Link } from '@remix-run/react';
+import { Button } from '~/components/ui/button';
 
 const offers = [
 	{
@@ -111,12 +112,23 @@ export default function Hero() {
 							Zašto tražiti dalje kada imamo sve što vam treba da završite
 							posao?
 						</p>
-						<Link
-							to="#contact"
-							className="mt-8 inline-block rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100"
-						>
-							Posetite Radnju
-						</Link>
+						<div className="mt-12 flex gap-4">
+							<Button variant="secondary" size="lg" asChild>
+								<Link to="#contact" className="!text-lg">
+									Posetite Radnju
+								</Link>
+							</Button>
+							<Button
+								variant="ghost"
+								size="lg"
+								className="text-white hover:text-inherit"
+								asChild
+							>
+								<a href="tel:+381658052022" className="!text-lg">
+									065 805 20 22
+								</a>
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>
