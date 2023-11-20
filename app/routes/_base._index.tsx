@@ -1,4 +1,5 @@
-import type { MetaFunction } from '@remix-run/node';
+import type { DataFunctionArgs, MetaFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
 import Contact from '~/components/layout/Contact';
 import Hero from '~/components/layout/Hero';
 import { CheckCircleIcon } from 'lucide-react';
@@ -14,6 +15,10 @@ export const meta: MetaFunction = () => {
 				'Naša ponuda obuhvata široki asortiman vrhunskih proizvoda, od alata i materijala do sudopera, slavina i gvožđarske robe.',
 		},
 	];
+};
+
+export const action = async () => {
+	return json({ message: 'success' });
 };
 
 const collections = [

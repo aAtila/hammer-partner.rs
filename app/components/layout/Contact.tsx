@@ -1,7 +1,24 @@
 import { Building2Icon, MailIcon, PhoneIcon } from 'lucide-react';
 import { Button } from '~/components/ui/button';
+import { Form, useNavigation } from '@remix-run/react';
+import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 
 export default function Example() {
+	const navigation = useNavigation();
+	const form = useRef<HTMLFormElement | null>(null);
+
+	useEffect(() => {
+		if (navigation.state === 'submitting') {
+			form.current?.reset();
+			toast.message('Vaša poruka je uspešno poslata!', {
+				description:
+					'Hvala vam što ste nas kontaktirali. Javićemo vam se u najkraćem mogućem roku.',
+				duration: 5000,
+			});
+		}
+	}, [navigation.state]);
+
 	return (
 		<div className="relative isolate bg-white">
 			<div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
@@ -93,7 +110,7 @@ export default function Example() {
 						</dl>
 					</div>
 				</div>
-				<form action="#" method="POST" className="px-8 py-24">
+				<Form className="px-8 py-24" method="POST" ref={form}>
 					<div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
 						<div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 							<div>
@@ -110,6 +127,7 @@ export default function Example() {
 										id="first-name"
 										autoComplete="given-name"
 										className="block w-full rounded-md border-0 px-3.5 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+										required
 									/>
 								</div>
 							</div>
@@ -144,6 +162,7 @@ export default function Example() {
 										id="email"
 										autoComplete="email"
 										className="block w-full rounded-md border-0 px-3.5 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+										required
 									/>
 								</div>
 							</div>
@@ -178,6 +197,7 @@ export default function Example() {
 										rows={4}
 										className="block w-full rounded-md border-0 px-3.5 py-2 text-slate-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 										defaultValue={''}
+										required
 									/>
 								</div>
 							</div>
@@ -186,7 +206,7 @@ export default function Example() {
 							<Button>Pošalji</Button>
 						</div>
 					</div>
-				</form>
+				</Form>
 			</div>
 		</div>
 	);
