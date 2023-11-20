@@ -94,7 +94,7 @@ export default function Hero() {
 					{/* Decorative image and overlay */}
 					<div aria-hidden="true" className="absolute inset-0 overflow-hidden">
 						<img
-							src="/assets/images/featured/hero-image-v2.png"
+							src="/assets/images/featured/hero-image-v2-min.webp"
 							alt=""
 							className="h-full w-full object-cover object-center"
 						/>
