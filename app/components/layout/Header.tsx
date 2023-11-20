@@ -9,8 +9,8 @@ export default function Header() {
 			<nav aria-label="Top">
 				{/* Top navigation */}
 				<div className="bg-gray-900">
-					<div className="mx-auto flex h-10 max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
-						<p className="text-center text-sm font-medium text-white lg:flex-none">
+					<div className="mx-auto flex max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
+						<p className="p-3 text-center text-sm font-medium text-white lg:flex-none">
 							Besplatna isporuka za sve porudžbine preko 3000 dinara
 						</p>
 					</div>
