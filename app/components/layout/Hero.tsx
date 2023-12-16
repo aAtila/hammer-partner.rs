@@ -112,7 +112,7 @@ export default function Hero() {
 							Zašto tražiti dalje kada imamo sve što vam treba da završite
 							posao?
 						</p>
-						<div className="mt-12 flex gap-4">
+						<div className="mt-12 grid gap-4 sm:grid-cols-2">
 							<Button variant="secondary" size="lg" asChild>
 								<Link to="#contact" className="!text-lg">
 									Posetite Radnju

@@ -53,10 +53,11 @@ const collections = [
 		href: '#',
 	},
 	{
-		name: 'Osvetljenje',
-		description: 'Sve što vam je potrebno za farbanje i renovacije',
-		imageSrc: '/assets/images/featured/osvetljenje.png',
-		imageAlt: 'Collection of four insulated travel bottles on wooden shelf.',
+		name: 'Aspiratori',
+		description: 'Efikasni i stilski aspiratori za modernu kuhinju',
+		imageSrc: '/assets/images/featured/aspiratori.webp',
+		imageAlt:
+			'Moderan aspirator visokog kvaliteta u fokusu, sa naprednim funkcijama, postavljen iznad šporeta u luksuznoj kuhinji sa tamnim elementima.',
 		href: '#',
 	},
 	{
@@ -67,6 +68,7 @@ const collections = [
 		href: '#',
 	},
 ];
+// aluminijumske merdevine i metalne police, granitne sudopere, stolari, testere
 const testimonials = [
 	{
 		id: 1,

@@ -11,7 +11,8 @@ export default function Header() {
 				<div className="bg-slate-900">
 					<div className="mx-auto flex max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
 						<p className="p-3 text-center text-sm font-medium text-white lg:flex-none">
-							Besplatna isporuka za sve porudžbine preko 3000 dinara
+							🌟 Iskoristite priliku: Kupite 2 artikla i uživajte u{' '}
+							<span className="uppercase">besplatnoj</span> dostavi! 🌟
 						</p>
 					</div>
 				</div>
@@ -24,7 +25,7 @@ export default function Header() {
 								{/* Logo (lg+) */}
 								<div className="hidden lg:flex lg:items-center">
 									<a href="#">
-										<span className="sr-only">Your Company</span>
+										<span className="sr-only">Hammer-Partner Subotica</span>
 										<img
 											className="h-8 w-auto"
 											src="/assets/images/logos/hammer-partner-logo.jpg"
@@ -35,28 +36,28 @@ export default function Header() {
 
 								{/* Mobile menu and search (lg-) */}
 								<div className="flex flex-1 items-center lg:hidden">
-									<button
-										type="button"
-										className="-ml-2 rounded-md bg-white p-2 text-gray-400"
-										onClick={() => setMobileMenuOpen(true)}
-									>
-										<span className="sr-only">Open menu</span>
-										<Menu className="h-6 w-6" aria-hidden="true" />
-									</button>
+									{/*<button*/}
+									{/*	type="button"*/}
+									{/*	className="-ml-2 rounded-md bg-white p-2 text-gray-400"*/}
+									{/*	onClick={() => setMobileMenuOpen(true)}*/}
+									{/*>*/}
+									{/*	<span className="sr-only">Otvori meni</span>*/}
+									{/*	<Menu className="h-6 w-6" aria-hidden="true" />*/}
+									{/*</button>*/}
 
 									{/* Search */}
-									<a
-										href="#"
-										className="ml-2 p-2 text-gray-400 hover:text-gray-500"
-									>
-										<span className="sr-only">Search</span>
-										<Search className="h-6 w-6" aria-hidden="true" />
-									</a>
+									{/*<a*/}
+									{/*	href="#"*/}
+									{/*	className="ml-2 p-2 text-gray-400 hover:text-gray-500"*/}
+									{/*>*/}
+									{/*	<span className="sr-only">Search</span>*/}
+									{/*	<Search className="h-6 w-6" aria-hidden="true" />*/}
+									{/*</a>*/}
 								</div>
 
 								{/* Logo (lg-) */}
 								<a href="#" className="lg:hidden">
-									<span className="sr-only">Your Company</span>
+									<span className="sr-only">Hammer-Partner Subotica</span>
 									<img
 										src="/assets/images/logos/hammer-partner-logo.jpg"
 										alt=""
@@ -68,23 +69,23 @@ export default function Header() {
 									<div className="flex items-center lg:ml-8">
 										<div className="flex space-x-8">
 											<div className="hidden lg:flex">
-												<a
-													href="#"
-													className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-												>
-													<span className="sr-only">Search</span>
-													<Search className="h-6 w-6" aria-hidden="true" />
-												</a>
+												{/*<a*/}
+												{/*	href="#"*/}
+												{/*	className="-m-2 p-2 text-gray-400 hover:text-gray-500"*/}
+												{/*>*/}
+												{/*	<span className="sr-only">Search</span>*/}
+												{/*	<Search className="h-6 w-6" aria-hidden="true" />*/}
+												{/*</a>*/}
 											</div>
 
 											<div className="flex">
-												<a
-													href="#"
-													className="-m-2 p-2 text-gray-400 hover:text-gray-500"
-												>
-													<span className="sr-only">Account</span>
-													<User className="h-6 w-6" aria-hidden="true" />
-												</a>
+												{/*<a*/}
+												{/*	href="#"*/}
+												{/*	className="-m-2 p-2 text-gray-400 hover:text-gray-500"*/}
+												{/*>*/}
+												{/*	<span className="sr-only">Account</span>*/}
+												{/*	<User className="h-6 w-6" aria-hidden="true" />*/}
+												{/*</a>*/}
 											</div>
 										</div>
 
@@ -94,17 +95,17 @@ export default function Header() {
 										/>
 
 										<div className="flow-root">
-											<a href="#" className="group -m-2 flex items-center p-2">
-												<ShoppingCart
-													strokeWidth={2}
-													className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-													aria-hidden="true"
-												/>
-												<span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-													0
-												</span>
-												<span className="sr-only">items in cart, view bag</span>
-											</a>
+											{/*<a href="#" className="group -m-2 flex items-center p-2">*/}
+											{/*	<ShoppingCart*/}
+											{/*		strokeWidth={2}*/}
+											{/*		className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"*/}
+											{/*		aria-hidden="true"*/}
+											{/*	/>*/}
+											{/*	<span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">*/}
+											{/*		0*/}
+											{/*	</span>*/}
+											{/*	<span className="sr-only">items in cart, view bag</span>*/}
+											{/*</a>*/}
 										</div>
 									</div>
 								</div>
