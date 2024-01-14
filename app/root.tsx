@@ -1,5 +1,3 @@
-import { cssBundleHref } from '@remix-run/css-bundle';
-import type { LinksFunction } from '@remix-run/node';
 import {
 	Links,
 	LiveReload,
@@ -8,13 +6,8 @@ import {
 	Scripts,
 	ScrollRestoration,
 } from '@remix-run/react';
-import styles from './tailwind.css';
+import './tailwind.css';
 import { Toaster } from 'sonner';
-
-export const links: LinksFunction = () => [
-	...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
-	{ rel: 'stylesheet', href: styles },
-];
 
 export default function App() {
 	return (
