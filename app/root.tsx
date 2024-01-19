@@ -18,7 +18,7 @@ export default function App() {
 				<Meta />
 				<Links />
 			</head>
-			<body>
+			<body className="flex flex-col">
 				<Outlet />
 				<ScrollRestoration />
 				<Scripts />
