@@ -1,4 +1,4 @@
-import type { DataFunctionArgs, MetaFunction } from '@remix-run/node';
+import type { MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import Contact from '~/components/layout/Contact';
 import Hero from '~/components/layout/Hero';
