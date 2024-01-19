@@ -1,4 +1,4 @@
-import { createCookie } from '@remix-run/node';
+import { createCookie, redirect } from '@remix-run/node';
 
 const secret = process.env.COOKIE_SECRET || 'my-secret';
 if (secret === 'my-secret') {
@@ -19,3 +19,13 @@ export const authCookie = createCookie('auth', {
 	secrets: [secret],
 	secure: process.env.NODE_ENV === 'production',
 });
+
+export const requireAuthCookie = async (request: Request) => {
+	const user = await authCookie.parse(request.headers.get('Cookie'));
+	const url = new URL(request.url);
+
+	if (!user)
+		throw redirect(`/prijava?next=${encodeURIComponent(url.pathname)}`);
+
+	return user;
+};
