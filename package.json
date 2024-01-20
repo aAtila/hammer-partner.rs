@@ -16,6 +16,7 @@
 	},
 	"dependencies": {
 		"@headlessui/react": "^1.7.18",
+		"@radix-ui/react-label": "^2.0.2",
 		"@radix-ui/react-slot": "^1.0.2",
 		"@remix-run/express": "^2.5.1",
 		"@remix-run/node": "^2.5.1",
