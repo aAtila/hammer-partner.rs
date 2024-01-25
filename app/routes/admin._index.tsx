@@ -1,3 +1,9 @@
+import PageTitle from './admin/components/page-title';
+
 export default function AdminPage() {
-	return <>Hello from Admin page!</>;
+	return (
+		<>
+			<PageTitle title="Početna" />
+		</>
+	);
 }

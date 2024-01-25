@@ -9,13 +9,14 @@ import {
 } from '@remix-run/react';
 import SubmitButton from '~/components/form/submit-button';
 import { authCookie, loginUser } from '~/auth';
+import { Label } from '~/components/ui/label';
 
 const schema = z.object({
 	email: z.string().min(5, 'Email je obavezan').email('Email nije validan'),
 	password: z
 		.string()
 		.min(1, 'Lozinka je obavezna')
-		.min(8, 'Lozinka je prekratka'),
+		.min(5, 'Lozinka je prekratka'),
 });
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -49,38 +50,34 @@ export default function SignInPage() {
 				<h1>Prijavi se</h1>
 				<Form className="mt-16 w-full" method="post" noValidate>
 					<fieldset disabled={isActionSubmission} className="group grid gap-3">
-						<div>
-							<Input
-								name="email"
-								type="email"
-								placeholder="email@hammer-partner.rs"
-								required
-							/>
-							{data &&
-							'errors' in data &&
-							'email' in data.errors &&
-							data.errors.email ? (
-								<small className="text-xs font-medium text-destructive">
-									{data.errors.email[0]}
-								</small>
-							) : null}
+						<div className="space-y-1.5">
+							<div className="flex justify-between">
+								<Label htmlFor="email">Email</Label>
+								{data &&
+								'errors' in data &&
+								'email' in data.errors &&
+								data.errors.email ? (
+									<small className="text-xs font-medium text-destructive">
+										{data.errors.email[0]}
+									</small>
+								) : null}
+							</div>
+							<Input name="email" type="email" required />
 						</div>
-						<Input
-							name="password"
-							type="password"
-							placeholder="********"
-							required
-						/>
-						<small className="text-xs font-medium text-destructive">
-							{data &&
-							'errors' in data &&
-							'password' in data.errors &&
-							data.errors.password ? (
-								<small className="text-xs font-medium text-destructive">
-									{data.errors.password[0]}
-								</small>
-							) : null}
-						</small>
+						<div className="space-y-1.5">
+							<div className="flex justify-between">
+								<Label htmlFor="email">Lozinka</Label>
+								{data &&
+								'errors' in data &&
+								'password' in data.errors &&
+								data.errors.password ? (
+									<small className="text-xs font-medium text-destructive">
+										{data.errors.password[0]}
+									</small>
+								) : null}
+							</div>
+							<Input name="password" type="password" required />
+						</div>
 						<input
 							name="next"
 							type="text"
