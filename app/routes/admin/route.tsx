@@ -34,7 +34,7 @@ export default function AdminLayout() {
 							className="flex items-center gap-4 rounded px-4 py-2 text-foreground/80 transition-colors hover:bg-gray-300/80 hover:text-foreground"
 						>
 							<UngroupIcon className="siz-4" />
-							<Link to="/admin/kategorije">Kategorije</Link>
+							Kategorije
 						</Link>
 					</nav>
 				</aside>
