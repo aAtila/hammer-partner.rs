@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "remix vite:build",
 		"dev": "remix vite:dev",
-		"start": "cross-env NODE_ENV=production node ./server.js",
+		"start": "cross-env NODE_ENV=production node ./server.mjs",
 		"format-code": "npm run prettier:fix & npm run lint:fix",
 		"lint": "eslint \"app/**/*.+(ts|tsx)\"",
 		"lint:fix": "npm run lint -- --fix",
