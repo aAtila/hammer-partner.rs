@@ -1,4 +1,4 @@
-import { Form } from '@remix-run/react';
+import { Form, json, useActionData } from '@remix-run/react';
 import PageTitle from './admin/components/page-title';
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
@@ -13,15 +13,41 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '~/components/ui/select';
+import type { ActionFunctionArgs } from '@remix-run/node';
+import { createProductFormSchema } from './admin/schemas';
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+	const data = Object.fromEntries(await request.formData());
+
+	const validated = createProductFormSchema.safeParse(data);
+
+	if (!validated.success) {
+		return json(
+			{ errors: validated.error.flatten().fieldErrors },
+			{
+				status: 400,
+			},
+		);
+	}
+};
 
 export default function CreateProductPage() {
+	const actionData = useActionData<typeof action>();
+
 	return (
 		<>
-			<PageTitle title="Postavi proizvod" />
-			<section className="mt-8 text-muted-foreground">
-				<Form className="mx-auto grid max-w-2xl grid-cols-[auto_1fr] items-center gap-3">
-					<Label htmlFor="product-name">Naziv proizvda:</Label>
-					<Input type="text" name="product-name" />
+			<PageTitle
+				title="Dodaj proizvod"
+				description="Dodaj novi proizvod u bazu podataka"
+			/>
+			<section className="mt-8 space-y-8 text-muted-foreground">
+				<FormErrors errors={actionData?.errors} />
+				<Form
+					className="mx-auto grid max-w-2xl grid-cols-[auto_1fr] items-center gap-3"
+					method="post"
+				>
+					<Label htmlFor="name">Naziv proizvda:</Label>
+					<Input type="text" name="name" />
 
 					<Label htmlFor="sku">ID proizvoda/SKU:</Label>
 					<Input type="text" name="sku" />
@@ -58,28 +84,13 @@ export default function CreateProductPage() {
 					<Input type="text" name="manufacturer" />
 
 					<Label htmlFor="product-image">Slika proizvoda:</Label>
-					<Input type="file" name="product-image" accept="image/*" />
-
-					<Label htmlFor="dimensions">Dimenzije:</Label>
-					<Input type="text" name="dimensions" />
-
-					<Label htmlFor="weight">Težina:</Label>
-					<Input type="text" name="weight" />
-
-					<Label htmlFor="color">Boja/Završna obrada:</Label>
-					<Input type="text" name="color" />
-
-					<Label htmlFor="material">Materijal:</Label>
-					<Input type="text" name="material" />
+					<Input type="file" name="image" accept="image/*" />
 
 					<Label htmlFor="warranty">Informacije o garanciji:</Label>
 					<Textarea name="warranty"></Textarea>
 
-					<Label htmlFor="shipping-info">Informacije o dostavi:</Label>
-					<Textarea name="shipping-info"></Textarea>
-
-					<Label htmlFor="tags">Oznake/Ključne reči:</Label>
-					<Input type="text" name="tags" />
+					<Label htmlFor="shippingInfo">Informacije o dostavi:</Label>
+					<Textarea name="shippingInfo"></Textarea>
 
 					<Label htmlFor="availability">Dostupnost:</Label>
 					<Select name="availability">
@@ -93,17 +104,25 @@ export default function CreateProductPage() {
 						</SelectContent>
 					</Select>
 
-					<Label htmlFor="safety-info">Informacije o bezbednosti:</Label>
-					<Textarea name="safety-info"></Textarea>
-
-					<Label htmlFor="user-manual">Korisnički priručnik/Uputstvo:</Label>
-					<Input type="file" name="user-manual" />
-
 					<div className="col-span-full text-right">
 						<Button type="submit">Dodaj proizvod</Button>
 					</div>
 				</Form>
 			</section>
 		</>
+	);
+}
+
+function FormErrors({ errors }: { errors?: any }) {
+	if (!errors) return null;
+
+	return (
+		<div className="mx-auto max-w-2xl rounded bg-red-400/20 p-5">
+			<ul className="list-inside list-disc text-red-500">
+				{Object.entries(errors).map(([key, value]) => (
+					<li key={key}>{value[0]}</li>
+				))}
+			</ul>
+		</div>
 	);
 }
