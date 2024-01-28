@@ -1,17 +1,22 @@
 import { z } from 'zod';
 
-export const createProductFormSchema = z.object({
+export const productFormSchema = z.object({
 	name: z.string().min(1, 'Naziv proizvoda je obavezan'),
 	sku: z.string().optional(),
-	category: z.enum(['tools', 'electrical', 'plumbing'], {
-		errorMap: (issue, ctx) => ({ message: 'Kategorija je obavezna' }),
-	}),
-	price: z.number().positive('Cena je obavezan i mora biti pozitivan broj'),
+	category: z.string().min(1, 'Kategorija je obavezna'),
+	price: z
+		.string()
+		.min(1, 'Cena je obavezna')
+		.transform((str) => parseFloat(str)),
+	// price: z.number().positive('Cena je obavezan i mora biti pozitivan broj'),
 	costPrice: z
-		.number()
-		.positive('Nabavna Cena mora biti pozitivan broj')
-		.optional(),
-	quantity: z.number().min(0, 'Količina na zalihi mora da bude barem 0'),
+		.string()
+		.optional()
+		.transform((str) => (str ? parseFloat(str) : undefined)),
+	quantity: z
+		.string()
+		.optional()
+		.transform((str) => (str ? parseFloat(str) : undefined)),
 	description: z.string().min(1, 'Opis proizvoda je obavezan'),
 	manufacturer: z.string().min(1, 'Proizvođač/Brend je obavezan'),
 	warranty: z.string().min(1, 'Informacije o garanciji je obavezan'),

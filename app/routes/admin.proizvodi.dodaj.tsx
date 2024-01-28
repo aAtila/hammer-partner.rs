@@ -14,12 +14,13 @@ import {
 	SelectValue,
 } from '~/components/ui/select';
 import type { ActionFunctionArgs } from '@remix-run/node';
-import { createProductFormSchema } from './admin/schemas';
+import { productFormSchema } from './admin/schemas';
+import { prisma } from '~/db/db.server';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = Object.fromEntries(await request.formData());
 
-	const validated = createProductFormSchema.safeParse(data);
+	const validated = productFormSchema.safeParse(data);
 
 	if (!validated.success) {
 		return json(
@@ -29,6 +30,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 			},
 		);
 	}
+
+	const productData = validated.data;
+
+	const product = await prisma.product.create({
+		data: {
+			...productData,
+			category: { connect: { id: productData.category } },
+		},
+	});
+
+	console.log(product);
+
+	return json({ product }, { status: 201 });
 };
 
 export default function CreateProductPage() {
@@ -60,8 +74,10 @@ export default function CreateProductPage() {
 						<SelectContent>
 							<SelectGroup>
 								<SelectLabel>Kategorije</SelectLabel>
-								<SelectItem value="tools">Alati</SelectItem>
-								<SelectItem value="electrical">Električni</SelectItem>
+								<SelectItem value="clrwym3x40001r9ldj0l4h2mg">Alati</SelectItem>
+								<SelectItem value="clrwwr4hj0000r9lds0bcwggp">
+									Električni
+								</SelectItem>
 								<SelectItem value="plumbing">Vodovodni</SelectItem>
 							</SelectGroup>
 						</SelectContent>
@@ -69,8 +85,8 @@ export default function CreateProductPage() {
 
 					<Label htmlFor="price">Cena:</Label>
 					<Input type="number" name="price" step="0.01" />
-					<Label htmlFor="cost-price">Nabavna Cena:</Label>
-					<Input type="number" name="cost-price" step="0.01" />
+					<Label htmlFor="costPrice">Nabavna Cena:</Label>
+					<Input type="number" name="costPrice" step="0.01" />
 
 					<Label htmlFor="quantity">Količina na zalihi:</Label>
 					<Input type="number" name="quantity" />
@@ -83,7 +99,7 @@ export default function CreateProductPage() {
 					<Label htmlFor="manufacturer">Proizvođač/Brend:</Label>
 					<Input type="text" name="manufacturer" />
 
-					<Label htmlFor="product-image">Slika proizvoda:</Label>
+					<Label htmlFor="image">Slika proizvoda:</Label>
 					<Input type="file" name="image" accept="image/*" />
 
 					<Label htmlFor="warranty">Informacije o garanciji:</Label>
