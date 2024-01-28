@@ -4,6 +4,10 @@ node_modules
 /build
 /public/build
 .env
+.env.local
 .idea
 .vscode
 .history
+
+/prisma/data.db
+/prisma/data.db-journal
