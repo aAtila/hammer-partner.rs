@@ -1,4 +1,4 @@
-import { Form, json, useActionData } from '@remix-run/react';
+import { Form, json, redirect, useActionData } from '@remix-run/react';
 import PageTitle from './admin/components/page-title';
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
@@ -33,16 +33,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 	const productData = validated.data;
 
-	const product = await prisma.product.create({
+	await prisma.product.create({
 		data: {
 			...productData,
 			category: { connect: { id: productData.category } },
 		},
 	});
 
-	console.log(product);
-
-	return json({ product }, { status: 201 });
+	return redirect(`/admin/proizvodi`);
 };
 
 export default function CreateProductPage() {
