@@ -1,4 +1,10 @@
-import { Form, json, redirect, useActionData } from '@remix-run/react';
+import {
+	Form,
+	json,
+	redirect,
+	useActionData,
+	useLoaderData,
+} from '@remix-run/react';
 import PageTitle from './admin/components/page-title';
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
@@ -16,6 +22,18 @@ import {
 import type { ActionFunctionArgs } from '@remix-run/node';
 import { productFormSchema } from './admin/schemas';
 import { prisma } from '~/db/db.server';
+import FormErrors from './admin/components/form-errors';
+
+export const loader = async () => {
+	const categories = await prisma.category.findMany({
+		select: {
+			id: true,
+			name: true,
+		},
+	});
+
+	return { categories };
+};
 
 export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = Object.fromEntries(await request.formData());
@@ -44,6 +62,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function CreateProductPage() {
+	const { categories } = useLoaderData<typeof loader>();
 	const actionData = useActionData<typeof action>();
 
 	return (
@@ -72,11 +91,11 @@ export default function CreateProductPage() {
 						<SelectContent>
 							<SelectGroup>
 								<SelectLabel>Kategorije</SelectLabel>
-								<SelectItem value="clrwym3x40001r9ldj0l4h2mg">Alati</SelectItem>
-								<SelectItem value="clrwwr4hj0000r9lds0bcwggp">
-									Električni
-								</SelectItem>
-								<SelectItem value="plumbing">Vodovodni</SelectItem>
+								{categories.map(({ id, name }) => (
+									<SelectItem key={id} value={id}>
+										{name}
+									</SelectItem>
+								))}
 							</SelectGroup>
 						</SelectContent>
 					</Select>
@@ -124,19 +143,5 @@ export default function CreateProductPage() {
 				</Form>
 			</section>
 		</>
-	);
-}
-
-function FormErrors({ errors }: { errors?: any }) {
-	if (!errors) return null;
-
-	return (
-		<div className="mx-auto max-w-2xl rounded bg-red-400/20 p-5">
-			<ul className="list-inside list-disc text-red-500">
-				{Object.entries(errors).map(([key, value]) => (
-					<li key={key}>{value[0]}</li>
-				))}
-			</ul>
-		</div>
 	);
 }
