@@ -23,3 +23,15 @@ export const productFormSchema = z.object({
 	shippingInfo: z.string().optional(),
 	availability: z.enum(['in-stock', 'out-of-stock', 'pre-order']),
 });
+
+export const categoryFormSchema = z
+	.object({
+		name: z.string().min(1, 'Naziv kategorije je obavezan'),
+		slug: z.string().optional(),
+	})
+	.transform((data) => {
+		return {
+			...data,
+			slug: data.slug ? data.slug : data.name.toLowerCase().replace(/\s/g, '-'),
+		};
+	});
