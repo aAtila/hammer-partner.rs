@@ -1,8 +1,8 @@
-import { Menu, Search, ShoppingCart, User } from 'lucide-react';
-import { useState } from 'react';
+// import { Menu, Search, ShoppingCart, User } from 'lucide-react';
+// import { useState } from 'react';
 
 export default function Header() {
-	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	// const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	return (
 		<header className="relative z-10">
