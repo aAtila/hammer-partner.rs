@@ -3,6 +3,7 @@ import PageTitle from './admin/components/page-title';
 import { PlusCircleIcon } from 'lucide-react';
 import { Link, useLoaderData } from '@remix-run/react';
 import { prisma } from '~/db/db.server';
+import CreateButton from './admin/components/create-button';
 
 export const loader = async () => {
 	const products = await prisma.product.findMany({
@@ -22,12 +23,7 @@ export default function ProductPage() {
 	return (
 		<>
 			<PageTitle title="Proizvodi" description="Lista svih proizvoda">
-				<Button asChild>
-					<Link to="dodaj" className="flex gap-2">
-						<PlusCircleIcon className="size-4" />
-						Dodaj proizvod
-					</Link>
-				</Button>
+				<CreateButton>Dodaj proizvod</CreateButton>
 			</PageTitle>
 			<section className="p-8">
 				<ul>
