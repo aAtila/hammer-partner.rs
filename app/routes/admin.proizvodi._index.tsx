@@ -32,7 +32,7 @@ export default function ProductPage() {
 			<section className="p-8">
 				<ul>
 					{products.map(({ id, name, price, manufacturer }) => (
-						<Link key={id} to={`/proizvodi/${id}`} prefetch="intent">
+						<Link key={id} to={`/admin/proizvodi/${id}`} prefetch="intent">
 							<li className="underline decoration-transparent decoration-1 underline-offset-4 transition-all after:content-['_↗'] hover:decoration-foreground">{`${name} | ${manufacturer} | ${price} RSD`}</li>
 						</Link>
 					))}
