@@ -10,8 +10,8 @@ export default function PageTitle({
 	children?: ReactNode;
 }) {
 	return (
-		<div className="flex items-center justify-between border-b pb-5">
-			<div>
+		<div className="flex items-center justify-between border-b">
+			<div className="px-8 py-5">
 				<h1 className="text-2xl font-medium">{title}</h1>
 				{description ? (
 					<p className="text-sm text-muted-foreground">{description}</p>

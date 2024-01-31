@@ -106,7 +106,7 @@ export default function CategoriesPage() {
 				title="Kategorije"
 				description="Lista svih dostupnih kategorija"
 			/>
-			<section className="mt-8 max-w-lg space-y-8 text-muted-foreground">
+			<section className="max-w-lg space-y-8 p-8 text-muted-foreground">
 				<div className="rounded border">
 					<Table>
 						<TableHeader>
