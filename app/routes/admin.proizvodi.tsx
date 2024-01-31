@@ -1,13 +1,10 @@
-import { Button } from '~/components/ui/button';
 import PageTitle from './admin/components/page-title';
-import { PlusCircleIcon } from 'lucide-react';
-import { Link, useLoaderData } from '@remix-run/react';
+import { Outlet, useLoaderData } from '@remix-run/react';
 import { prisma } from '~/db/db.server';
 import CreateButton from './admin/components/create-button';
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
@@ -26,12 +23,13 @@ export const loader = async () => {
 
 export default function ProductPage() {
 	const { products } = useLoaderData<typeof loader>();
+
 	return (
 		<>
 			<PageTitle title="Proizvodi" description="Lista svih proizvoda" />
 			<section className="p-8">
 				<div className="text-right">
-					<CreateButton>Dodaj proizvod</CreateButton>
+					<CreateButton to="dodaj">Dodaj proizvod</CreateButton>
 				</div>
 				<div className="mt-3 rounded border">
 					<Table>
@@ -64,6 +62,7 @@ export default function ProductPage() {
 					</Table>
 				</div>
 			</section>
+			<Outlet />
 		</>
 	);
 }
