@@ -38,7 +38,7 @@ export default function AdminLayout() {
 						</Link>
 					</nav>
 				</aside>
-				<main className="w-full flex-grow rounded-l-lg border border-gray-300/80 bg-white p-8 shadow-sm">
+				<main className="w-full flex-grow rounded-l-lg border border-gray-300/80 bg-white shadow-sm">
 					<Outlet />
 				</main>
 			</div>
