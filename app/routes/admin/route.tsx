@@ -24,6 +24,7 @@ export default function AdminLayout() {
 					<nav className="mt-8 grid gap-2">
 						<Link
 							to="/admin/proizvodi"
+							prefetch="intent"
 							className="flex items-center gap-4 rounded px-4 py-2 text-foreground/80 transition-colors hover:bg-gray-300/80 hover:text-foreground"
 						>
 							<PackageIcon className="siz-4" />
@@ -31,6 +32,7 @@ export default function AdminLayout() {
 						</Link>
 						<Link
 							to="/admin/kategorije"
+							prefetch="intent"
 							className="flex items-center gap-4 rounded px-4 py-2 text-foreground/80 transition-colors hover:bg-gray-300/80 hover:text-foreground"
 						>
 							<UngroupIcon className="siz-4" />
