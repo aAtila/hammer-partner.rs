@@ -22,7 +22,7 @@ import {
 import { PencilIcon, Trash2Icon } from 'lucide-react';
 import { flushSync } from 'react-dom';
 
-const Intent = {
+export const Intent = {
 	Create: 'create',
 	Update: 'update',
 	Delete: 'delete',
@@ -113,7 +113,7 @@ export default function CategoriesPage() {
 							<TableRow>
 								<TableHead className="min-w-[250px]">Naziv</TableHead>
 								<TableHead className="text-center">Proizvodi</TableHead>
-								<TableHead className="text-right">Akcije</TableHead>
+								<TableHead className="text-right"></TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
