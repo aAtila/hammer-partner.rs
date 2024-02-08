@@ -1,3 +1,4 @@
+import slugify from '@sindresorhus/slugify';
 import { z } from 'zod';
 
 export const productFormSchema = z
@@ -28,7 +29,7 @@ export const productFormSchema = z
 	.transform((data) => {
 		return {
 			...data,
-			slug: data.slug ? data.slug : data.name.toLowerCase().replace(/\s/g, '-'),
+			slug: data.slug ? slugify(data.slug) : slugify(data.name),
 		};
 	});
 
@@ -40,6 +41,6 @@ export const categoryFormSchema = z
 	.transform((data) => {
 		return {
 			...data,
-			slug: data.slug ? data.slug : data.name.toLowerCase().replace(/\s/g, '-'),
+			slug: data.slug ? slugify(data.slug) : slugify(data.name),
 		};
 	});
