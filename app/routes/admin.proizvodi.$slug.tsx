@@ -4,6 +4,9 @@ import { prisma } from '~/db/db.server';
 import PageTitle from './admin/components/page-title';
 import { toCurrency } from '~/utils/number';
 import { formatDate } from '~/utils/date';
+import Markdown from 'react-markdown';
+
+import type { HTMLAttributes } from 'react';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
 	const slug = params.slug;
@@ -29,7 +32,7 @@ export default function ProductDetailsPage() {
 				title="Detalji proizvoda"
 				description="Pregledaj i ažuriraj detalje proizvoda"
 			/>
-			<dl className="mx-auto max-w-2xl p-8">
+			<dl className="max-w-2x mx-auto">
 				<DataListItem label="Naziv" value={product.name} />
 				<DataListItem label="Proizvođač" value={product.manufacturer} />
 				<DataListItem label="Cena" value={toCurrency(product.price)} />
@@ -41,7 +44,11 @@ export default function ProductDetailsPage() {
 				<DataListItem label="Količina" value={product.quantity.toString()} />
 				<DataListItem label="Kreiran" value={formatDate(product.createdAt)} />
 				<DataListItem label="Ažuriran" value={formatDate(product.updatedAt)} />
-				<DataListItem label="Opis" value={product.description} />
+				<DataListItem
+					label="Opis"
+					value={product.description}
+					wrapWithMarkdown={true}
+				/>
 				<DataListItem label="Slika" value={product.image} />
 			</dl>
 		</>
@@ -51,13 +58,24 @@ export default function ProductDetailsPage() {
 type DataListItemProps = {
 	label: string;
 	value: string | null;
-};
+	wrapWithMarkdown?: boolean;
+} & HTMLAttributes<HTMLDivElement>;
 
-const DataListItem = ({ label, value }: DataListItemProps) => {
+const DataListItem = ({
+	label,
+	value,
+	wrapWithMarkdown,
+	...props
+}: DataListItemProps) => {
 	return (
-		<div className="grid grid-cols-[auto_1fr] p-5 hover:rounded hover:bg-slate-50">
+		<div
+			className="grid grid-cols-[auto_1fr] p-5 hover:rounded hover:bg-slate-50"
+			{...props}
+		>
 			<dt className="min-w-48 font-medium">{label}</dt>
-			<dd className="text-muted-foreground">{value}</dd>
+			<dd className="text-muted-foreground">
+				{wrapWithMarkdown ? <Markdown>{value}</Markdown> : value}
+			</dd>
 		</div>
 	);
 };
