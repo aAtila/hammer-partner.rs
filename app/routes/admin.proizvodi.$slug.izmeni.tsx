@@ -6,10 +6,10 @@ import { toCurrency } from '~/utils/number';
 import { formatDate } from '~/utils/date';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-	const id = params.id;
+	const slug = params.slug;
 
 	const product = await prisma.product.findUnique({
-		where: { id },
+		where: { slug },
 		include: { category: true },
 	});
 

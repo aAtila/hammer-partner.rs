@@ -77,6 +77,12 @@ export default function ProductPage() {
 									<TableCell>{formatDate(product.createdAt)}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex gap-2">
+											<Link to={`${product.slug}`} prefetch="intent">
+												<EyeIcon className="size-4 transition-colors hover:text-sky-600" />
+											</Link>
+											<Link to={`${product.slug}/izmeni`} prefetch="intent">
+												<PencilIcon className="size-4 transition-colors hover:text-sky-600" />
+											</Link>
 											<fetcher.Form method="post">
 												<input
 													type="text"
