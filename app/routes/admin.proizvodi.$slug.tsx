@@ -6,7 +6,6 @@ import { toCurrency } from '~/utils/number';
 import { formatDate } from '~/utils/date';
 import Markdown from 'react-markdown';
 
-import type { HTMLAttributes } from 'react';
 import { cn } from '~/lib/utils';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
