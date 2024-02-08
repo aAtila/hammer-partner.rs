@@ -7,6 +7,7 @@ import { formatDate } from '~/utils/date';
 import Markdown from 'react-markdown';
 
 import type { HTMLAttributes } from 'react';
+import { cn } from '~/lib/utils';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
 	const slug = params.slug;
@@ -58,22 +59,25 @@ export default function ProductDetailsPage() {
 type DataListItemProps = {
 	label: string;
 	value: string | null;
+	className?: string;
 	wrapWithMarkdown?: boolean;
-} & HTMLAttributes<HTMLDivElement>;
+};
 
 const DataListItem = ({
 	label,
 	value,
+	className,
 	wrapWithMarkdown,
-	...props
 }: DataListItemProps) => {
 	return (
 		<div
-			className="grid grid-cols-[auto_1fr] p-5 hover:rounded hover:bg-slate-50"
-			{...props}
+			className={cn(
+				className,
+				'grid grid-cols-[auto_1fr] p-5 hover:rounded hover:bg-slate-50',
+			)}
 		>
 			<dt className="min-w-48 font-medium">{label}</dt>
-			<dd className="text-muted-foreground">
+			<dd className="space-y-3 text-muted-foreground">
 				{wrapWithMarkdown ? <Markdown>{value}</Markdown> : value}
 			</dd>
 		</div>
