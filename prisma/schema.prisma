@@ -24,7 +24,7 @@ model Product {
   description      String?
   shortDescription String?
   manufacturer     String?
-  image            String?
+  images           Image[]
   warranty         String
   shippingInfo     String?
   availability     String
@@ -38,6 +38,16 @@ model Category {
   name      String
   slug      String    @unique
   products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Image {
+  id        String    @id @default(cuid())
+  url       String
+  productId String
+  product   Product   @relation(fields: [productId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
