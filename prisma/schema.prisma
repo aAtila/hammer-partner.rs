@@ -11,24 +11,26 @@ datasource db {
 }
 
 model Product {
-  id           String    @id @default(cuid())
-  name         String
-  slug         String?   @unique
-  sku          String?   @unique
-  categoryId   String
-  category     Category  @relation(fields: [categoryId], references: [id])
-  price        Float
-  costPrice    Float?
-  quantity     Int       @default(0)
-  description  String?
-  manufacturer String?
-  image        String?
-  warranty     String
-  shippingInfo String?
-  availability String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  deletedAt    DateTime?
+  id               String    @id @default(cuid())
+  name             String
+  slug             String?   @unique
+  sku              String?   @unique
+  ean              String?   @unique
+  categoryId       String
+  category         Category  @relation(fields: [categoryId], references: [id])
+  price            Float
+  costPrice        Float?
+  quantity         Int       @default(0)
+  description      String?
+  shortDescription String?
+  manufacturer     String?
+  image            String?
+  warranty         String
+  shippingInfo     String?
+  availability     String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime?
 }
 
 model Category {
