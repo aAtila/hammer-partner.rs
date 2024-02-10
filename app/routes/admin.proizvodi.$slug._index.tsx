@@ -12,7 +12,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	const slug = params.slug;
 
 	const product = await prisma.product.findUnique({
-		where: { slug },
+		where: { slug, deletedAt: null },
 		include: { category: true },
 	});
 
