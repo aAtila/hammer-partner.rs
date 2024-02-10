@@ -6,6 +6,7 @@ export const productFormSchema = z
 		name: z.string().min(1, 'Naziv proizvoda je obavezan'),
 		slug: z.string().optional(),
 		sku: z.string().optional(),
+		ean: z.string().optional(),
 		category: z.string().min(1, 'Kategorija je obavezna'),
 		price: z
 			.string()
@@ -21,6 +22,7 @@ export const productFormSchema = z
 			.optional()
 			.transform((str) => (str ? parseFloat(str) : undefined)),
 		description: z.string().min(1, 'Opis proizvoda je obavezan'),
+		shortDescription: z.string().optional(),
 		manufacturer: z.string().min(1, 'Proizvođač/Brend je obavezan'),
 		warranty: z.string().min(1, 'Informacije o garanciji je obavezan'),
 		shippingInfo: z.string().optional(),

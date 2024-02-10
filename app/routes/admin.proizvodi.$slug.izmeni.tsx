@@ -148,11 +148,18 @@ export default function ProductDetailsPage() {
 													defaultValue={product.name}
 												/>
 
-												<Label htmlFor="sku">ID proizvoda/SKU:</Label>
+												<Label htmlFor="sku">Šifra proizvoda:</Label>
 												<Input
 													type="text"
 													name="sku"
 													defaultValue={product.sku ?? undefined}
+												/>
+
+												<Label htmlFor="ean">EAN broj/Barkod:</Label>
+												<Input
+													type="text"
+													name="ean"
+													defaultValue={product.ean ?? undefined}
 												/>
 
 												<Label htmlFor="category">Kategorija:</Label>
@@ -175,14 +182,14 @@ export default function ProductDetailsPage() {
 													</SelectContent>
 												</Select>
 
-												<Label htmlFor="price">Cena:</Label>
+												<Label htmlFor="price">Maloprodajna cena:</Label>
 												<Input
 													type="number"
 													name="price"
 													step="0.01"
 													defaultValue={product.price}
 												/>
-												<Label htmlFor="costPrice">Nabavna Cena:</Label>
+												<Label htmlFor="costPrice">Veleprodajna Cena:</Label>
 												<Input
 													type="number"
 													name="costPrice"
@@ -203,6 +210,14 @@ export default function ProductDetailsPage() {
 												<Textarea
 													name="description"
 													defaultValue={product.description ?? undefined}
+												></Textarea>
+
+												<Label htmlFor="shortDescription">
+													Kratak opis proizvoda:
+												</Label>
+												<Textarea
+													name="shortDescription"
+													defaultValue={product.shortDescription ?? undefined}
 												></Textarea>
 
 												<Label htmlFor="manufacturer">Proizvođač/Brend:</Label>

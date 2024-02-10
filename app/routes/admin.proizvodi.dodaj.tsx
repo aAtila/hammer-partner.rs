@@ -132,8 +132,11 @@ export default function CreateProductPage() {
 												<Label htmlFor="name">Naziv proizvoda:</Label>
 												<Input type="text" name="name" />
 
-												<Label htmlFor="sku">ID proizvoda/SKU:</Label>
+												<Label htmlFor="sku">Šifra proizvoda/SKU:</Label>
 												<Input type="text" name="sku" />
+
+												<Label htmlFor="ean">EAN broj/Barkod:</Label>
+												<Input type="text" name="ean" />
 
 												<Label htmlFor="category">Kategorija:</Label>
 												<Select name="category">
@@ -152,9 +155,9 @@ export default function CreateProductPage() {
 													</SelectContent>
 												</Select>
 
-												<Label htmlFor="price">Cena:</Label>
+												<Label htmlFor="price">Maloprodajna cena:</Label>
 												<Input type="number" name="price" step="0.01" />
-												<Label htmlFor="costPrice">Nabavna Cena:</Label>
+												<Label htmlFor="costPrice">Veleprodajna cena:</Label>
 												<Input type="number" name="costPrice" step="0.01" />
 
 												<Label htmlFor="quantity">Količina na zalihi:</Label>
@@ -164,6 +167,11 @@ export default function CreateProductPage() {
 													Opis proizvoda:
 												</Label>
 												<Textarea name="description"></Textarea>
+
+												<Label htmlFor="shortDescription" className="">
+													Kratak opis proizvoda:
+												</Label>
+												<Textarea name="shortDescription"></Textarea>
 
 												<Label htmlFor="manufacturer">Proizvođač/Brend:</Label>
 												<Input type="text" name="manufacturer" />
