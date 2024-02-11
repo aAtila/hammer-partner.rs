@@ -1,19 +1,23 @@
-import { Disclosure, RadioGroup, Tab } from '@headlessui/react';
+import { Tab } from '@headlessui/react';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { cn } from '~/lib/utils';
-import { HeartIcon, MinusIcon, PlusIcon, StarIcon } from 'lucide-react';
-import { useState } from 'react';
+import { StarIcon } from 'lucide-react';
+import { prisma } from '~/db/db.server';
+import { useLoaderData } from '@remix-run/react';
+import { toCurrency } from '~/utils/number';
+import { Button } from '~/components/ui/button';
+import Markdown from 'react-markdown';
+import { CDN, CDN_FOLDER } from '~/config/constants';
 
-const product = {
-	name: 'Zip Tote Basket',
-	price: '$140',
-	rating: 4,
+const defaultProduct = {
+	rating: 5,
 	images: [
 		{
 			id: 1,
 			name: 'Angled view',
 			src: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
 			alt: 'Angled front view with bag zipped and handles upright.',
+			selected: true,
 		},
 		{
 			id: 2,
@@ -34,68 +38,53 @@ const product = {
 			alt: 'Angled front view with bag zipped and handles upright.',
 		},
 	],
-	colors: [
-		{
-			name: 'Washed Black',
-			bgColor: 'bg-gray-700',
-			selectedColor: 'ring-gray-700',
-		},
-		{ name: 'White', bgColor: 'bg-white', selectedColor: 'ring-gray-400' },
-		{
-			name: 'Washed Gray',
-			bgColor: 'bg-gray-500',
-			selectedColor: 'ring-gray-500',
-		},
-	],
-	description: `
-    <p>The Zip Tote Basket is the perfect midpoint between shopping tote and comfy backpack. With convertible straps, you can hand carry, should sling, or backpack this convenient and spacious bag. The zip top and durable canvas construction keeps your goods protected for all-day use.</p>
-  `,
-	details: [
-		{
-			name: 'Features',
-			items: [
-				'Multiple strap configurations',
-				'Spacious interior with top zip',
-				'Leather handle and tabs',
-				'Interior dividers',
-				'Stainless strap loops',
-				'Double stitched construction',
-				'Water-resistant',
-			],
-		},
-		// More sections...
-	],
 };
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-	return { message: `Hello from ${params.productSlug} page!` };
+	const category = params.category;
+	const slug = params.productSlug;
+
+	const product = await prisma.product.findFirst({
+		where: {
+			slug: slug,
+			category: {
+				slug: category,
+			},
+		},
+		include: {
+			category: true,
+			images: true,
+		},
+	});
+
+	return { product } as const;
 };
 
 export default function ProductPage() {
-	const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+	const { product } = useLoaderData<typeof loader>();
 
 	return (
 		<div className="bg-white">
-			<div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+			<div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
 				<div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
 					{/* Image gallery */}
 					<Tab.Group as="div" className="flex flex-col-reverse">
 						{/* Image selector */}
 						<div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
 							<Tab.List className="grid grid-cols-4 gap-6">
-								{product.images.map((image) => (
+								{product?.images?.map((image) => (
 									<Tab
 										key={image.id}
 										className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
 									>
 										{({ selected }) => (
 											<>
-												<span className="sr-only">{image.name}</span>
+												<span className="sr-only">{image.alt}</span>
 												<span className="absolute inset-0 overflow-hidden rounded-md">
 													<img
-														src={image.src}
+														src={`${CDN}/w_130,h_93,c_fill,q_90/${CDN_FOLDER}/${product.id}/${image.url}`}
 														alt=""
-														className="h-full w-full object-cover object-center"
+														className="size-full object-cover object-center"
 													/>
 												</span>
 												<span
@@ -113,12 +102,15 @@ export default function ProductPage() {
 						</div>
 
 						<Tab.Panels className="aspect-h-1 aspect-w-1 w-full">
-							{product.images.map((image) => (
-								<Tab.Panel key={image.id}>
+							{product?.images?.map((image) => (
+								<Tab.Panel
+									key={image.id}
+									className="bg-pattern flex items-center border border-gray-100 sm:min-h-[592px] sm:overflow-hidden sm:rounded-lg"
+								>
 									<img
-										src={image.src}
-										alt={image.alt}
-										className="h-full w-full object-cover object-center sm:rounded-lg"
+										src={`${CDN}/w_592,h_592,c_fit,q_99/${CDN_FOLDER}/${product.id}/${image.url}`}
+										alt={image.alt ?? ''}
+										className="size-full object-cover object-center"
 									/>
 								</Tab.Panel>
 							))}
@@ -128,13 +120,13 @@ export default function ProductPage() {
 					{/* Product info */}
 					<div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
 						<h1 className="text-3xl font-bold tracking-tight text-gray-900">
-							{product.name}
+							{product?.name}
 						</h1>
 
 						<div className="mt-3">
-							<h2 className="sr-only">Product information</h2>
+							<h2 className="sr-only">Detalji proizvoda</h2>
 							<p className="text-3xl tracking-tight text-gray-900">
-								{product.price}
+								{toCurrency(product?.price ?? '')}
 							</p>
 						</div>
 
@@ -147,8 +139,8 @@ export default function ProductPage() {
 										<StarIcon
 											key={rating}
 											className={cn(
-												product.rating > rating
-													? 'text-indigo-500'
+												defaultProduct.rating > rating
+													? 'text-blue-500'
 													: 'text-gray-300',
 												'h-5 w-5 flex-shrink-0',
 											)}
@@ -156,22 +148,24 @@ export default function ProductPage() {
 										/>
 									))}
 								</div>
-								<p className="sr-only">{product.rating} out of 5 stars</p>
+								<p className="sr-only">{defaultProduct.rating} od 5 zvezdica</p>
 							</div>
 						</div>
 
 						<div className="mt-6">
-							<h3 className="sr-only">Description</h3>
+							<h3 className="sr-only">Opis</h3>
 
 							<div
 								className="space-y-6 text-base text-gray-700"
-								dangerouslySetInnerHTML={{ __html: product.description }}
+								dangerouslySetInnerHTML={{
+									__html: product?.shortDescription ?? '',
+								}}
 							/>
 						</div>
 
 						<form className="mt-6">
 							{/* Colors */}
-							<div>
+							{/* <div>
 								<h3 className="text-sm text-gray-600">Color</h3>
 
 								<RadioGroup
@@ -183,7 +177,7 @@ export default function ProductPage() {
 										Choose a color
 									</RadioGroup.Label>
 									<span className="flex items-center space-x-3">
-										{product.colors.map((color) => (
+										{defaultProduct.colors.map((color) => (
 											<RadioGroup.Option
 												key={color.name}
 												value={color}
@@ -210,36 +204,36 @@ export default function ProductPage() {
 										))}
 									</span>
 								</RadioGroup>
-							</div>
+							</div> */}
 
-							<div className="sm:flex-col1 mt-10 flex">
-								<button
+							<div className="mt-10 flex sm:flex-col">
+								<Button
 									type="submit"
-									className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+									className="w-full max-w-md bg-blue-600 font-medium hover:bg-blue-700"
 								>
-									Add to bag
-								</button>
+									Dodaj u korpu
+								</Button>
 
-								<button
+								{/* <button
 									type="button"
 									className="ml-4 flex items-center justify-center rounded-md p-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
 								>
 									<HeartIcon
-										className="h-6 w-6 flex-shrink-0"
+										className="size-6 flex-shrink-0"
 										aria-hidden="true"
 									/>
 									<span className="sr-only">Add to favorites</span>
-								</button>
+								</button> */}
 							</div>
 						</form>
 
 						<section aria-labelledby="details-heading" className="mt-12">
 							<h2 id="details-heading" className="sr-only">
-								Additional details
+								Additional details Additional details
 							</h2>
 
-							<div className="divide-y divide-gray-200 border-t">
-								{product.details.map((detail) => (
+							<div className="divide-y divide-gray-200 border-t py-12">
+								{/* {defaultProduct.details.map((detail) => (
 									<Disclosure as="div" key={detail.name}>
 										{({ open }) => (
 											<>
@@ -256,12 +250,12 @@ export default function ProductPage() {
 														<span className="ml-6 flex items-center">
 															{open ? (
 																<MinusIcon
-																	className="block h-6 w-6 text-indigo-400 group-hover:text-indigo-500"
+																	className="block size-6 text-indigo-400 group-hover:text-indigo-500"
 																	aria-hidden="true"
 																/>
 															) : (
 																<PlusIcon
-																	className="block h-6 w-6 text-gray-400 group-hover:text-gray-500"
+																	className="block size-6 text-gray-400 group-hover:text-gray-500"
 																	aria-hidden="true"
 																/>
 															)}
@@ -281,7 +275,13 @@ export default function ProductPage() {
 											</>
 										)}
 									</Disclosure>
-								))}
+								))} */}
+								<div className="space-y-5">
+									<h2 className="font-medium">Detaljan opis</h2>
+									<div className="prose">
+										<Markdown>{product?.description}</Markdown>
+									</div>
+								</div>
 							</div>
 						</section>
 					</div>

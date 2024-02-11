@@ -80,3 +80,11 @@ body,
 		@apply bg-background text-foreground;
 	}
 }
+
+.bg-pattern {
+	background-image: radial-gradient(
+		rgba(0, 0, 0, 0.15) 0.5px,
+		rgb(250, 250, 250) 0.5px
+	);
+	background-size: 10px 10px;
+}
