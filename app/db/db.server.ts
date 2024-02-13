@@ -16,23 +16,23 @@ const prismaClientSingleton = () => {
 		 * Query logging Client extension
 		 * Source: https://github.com/prisma/prisma-client-extensions/tree/main/query-logging
 		 */
-		query: {
-			$allModels: {
-				async $allOperations({ operation, model, args, query }) {
-					const start = performance.now();
-					const result = await query(args);
-					const end = performance.now();
-					const time = end - start;
-					console.log(
-						util.inspect(
-							{ model, operation, time, args },
-							{ showHidden: false, depth: null, colors: true },
-						),
-					);
-					return result;
-				},
-			},
-		},
+		// 	query: {
+		// 		$allModels: {
+		// 			async $allOperations({ operation, model, args, query }) {
+		// 				const start = performance.now();
+		// 				const result = await query(args);
+		// 				const end = performance.now();
+		// 				const time = end - start;
+		// 				console.log(
+		// 					util.inspect(
+		// 						{ model, operation, time, args },
+		// 						{ showHidden: false, depth: null, colors: true },
+		// 					),
+		// 				);
+		// 				return result;
+		// 			},
+		// 		},
+		// 	},
 	});
 };
 
