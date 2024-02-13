@@ -49,7 +49,7 @@ export default function ProductDetailsPage() {
 					value={product.description}
 					wrapWithMarkdown={true}
 				/>
-				<DataListItem label="Slika" value={product.image} />
+				{/* <DataListItem label="Slika" value={product.image} /> */}
 			</dl>
 		</>
 	);
