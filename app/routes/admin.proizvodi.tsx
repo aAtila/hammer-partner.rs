@@ -34,7 +34,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export const loader = async () => {
 	const products = await prisma.product.findMany({
 		where: { deletedAt: null },
-		include: { category: { select: { name: true } } },
+		include: { category: { select: { name: true, slug: true } } },
 	});
 
 	return { products };
@@ -77,7 +77,11 @@ export default function ProductPage() {
 									<TableCell>{formatDate(product.createdAt)}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex gap-2">
-											<Link to={`${product.slug}`} prefetch="intent">
+											<Link
+												to={`/${product.category.slug}/${product.slug}`}
+												target="_blank"
+												prefetch="intent"
+											>
 												<EyeIcon className="size-4 transition-colors hover:text-sky-600" />
 											</Link>
 											<Link to={`${product.slug}/izmeni`} prefetch="intent">
