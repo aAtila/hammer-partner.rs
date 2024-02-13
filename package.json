@@ -16,6 +16,8 @@
 		"setup": "prisma generate && prisma migrate deploy"
 	},
 	"dependencies": {
+		"@conform-to/react": "^1.0.1",
+		"@conform-to/zod": "^1.0.1",
 		"@headlessui/react": "^1.7.18",
 		"@libsql/client": "^0.4.3",
 		"@prisma/adapter-libsql": "^5.9.1",
