@@ -5,7 +5,7 @@ import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import type { ActionFunctionArgs } from '@remix-run/node';
 import { categoryFormSchema } from './admin/schemas';
-import { prisma } from '~/db/db.server';
+import prisma from '~/db/db.server';
 import FormErrors from './admin/components/form-errors';
 import { useEffect, useRef, useState } from 'react';
 import type { Category } from '@prisma/client';

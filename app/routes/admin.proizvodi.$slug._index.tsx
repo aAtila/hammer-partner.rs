@@ -1,6 +1,6 @@
 import { json, redirect, type LoaderFunctionArgs } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
-import { prisma } from '~/db/db.server';
+import prisma from '~/db/db.server';
 import PageTitle from './admin/components/page-title';
 import { toCurrency } from '~/utils/number';
 import { formatDate } from '~/utils/date';

@@ -2,7 +2,7 @@ import { Tab } from '@headlessui/react';
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { cn } from '~/lib/utils';
 import { StarIcon } from 'lucide-react';
-import { prisma } from '~/db/db.server';
+import prisma from '~/db/db.server';
 import { useLoaderData } from '@remix-run/react';
 import { toCurrency } from '~/utils/number';
 import { Button } from '~/components/ui/button';

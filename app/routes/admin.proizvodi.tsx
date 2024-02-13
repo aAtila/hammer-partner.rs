@@ -1,6 +1,6 @@
 import PageTitle from './admin/components/page-title';
 import { Link, Outlet, useFetcher, useLoaderData } from '@remix-run/react';
-import { prisma } from '~/db/db.server';
+import prisma from '~/db/db.server';
 import CreateButton from './admin/components/create-button';
 import {
 	Table,

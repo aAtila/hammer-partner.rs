@@ -22,7 +22,7 @@ import {
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
-import { prisma } from '~/db/db.server';
+import prisma from '~/db/db.server';
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { productFormSchema } from './admin/schemas';
 import FormErrors from './admin/components/form-errors';

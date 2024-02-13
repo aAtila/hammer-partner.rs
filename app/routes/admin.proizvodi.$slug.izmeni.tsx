@@ -6,7 +6,7 @@ import {
 	useLoaderData,
 	useNavigate,
 } from '@remix-run/react';
-import { prisma } from '~/db/db.server';
+import prisma from '~/db/db.server';
 import { Dialog, Transition } from '@headlessui/react';
 import {
 	Select,
