@@ -4,20 +4,50 @@ const PUBLITIO_API_KEY = process.env.PUBLITIO_API_KEY ?? '';
 const PUBLITIO_API_SECRET = process.env.PUBLITIO_API_SECRET ?? '';
 const PUBLITIO_PARENT_ID = 'AelL3Jjb';
 
-export const uploadImage = async (file: File) => {
+type CreateFileResponse = {
+	success: boolean;
+	code: number;
+	message: string;
+	id: string;
+	public_id: string | null;
+	folder: string;
+	folder_id: string;
+	title: string;
+	description: string;
+	tags: string;
+	type: string;
+	extension: string;
+	size: number;
+	width: number;
+	height: number;
+	privacy: string;
+	option_download: string;
+	option_ad: string;
+	option_transform: string;
+	wm_id: string | null;
+	url_preview: string;
+	url_thumbnail: string;
+	url_download: string;
+	versions: number;
+	hits: number;
+	created_at: string;
+	updated_at: string;
+};
+
+export const uploadFile = async (
+	file: File,
+	folderId: string,
+): Promise<CreateFileResponse> => {
 	const formData = new FormData();
 	formData.append('file', file);
 
 	const authParams = getAuthSignature();
-	const url = `https://api.publit.io/v1/files/create?${authParams}`;
+	const url = `https://api.publit.io/v1/files/create?${authParams}&privacy=1&folder=${folderId}`;
 
-	fetch(url, {
+	return fetch(url, {
 		method: 'POST',
 		body: formData,
-	})
-		.then((response) => response.json())
-		.then((json) => console.log({ json }))
-		.catch((error) => console.log({ error }));
+	}).then((response) => response.json());
 };
 
 type PublitioFolderResponse = {
