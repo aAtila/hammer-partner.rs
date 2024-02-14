@@ -26,6 +26,7 @@ model Product {
   shortDescription String?
   manufacturer     String?
   images           Image[]
+  publitioFolderId String?
   warranty         String
   shippingInfo     String?
   availability     String
