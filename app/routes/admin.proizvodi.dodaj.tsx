@@ -23,9 +23,10 @@ import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
 import prisma from '~/db/db.server';
-import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
+import type { ActionFunctionArgs } from '@remix-run/node';
 import { productFormSchema } from './admin/schemas';
 import FormErrors from './admin/components/form-errors';
+import { createFolder } from '~/services/publitio.server';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = Object.fromEntries(await request.formData());
@@ -43,17 +44,27 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 	const productData = validated.data;
 
-	await prisma.product.create({
+	// create the product
+	const newProduct = await prisma.product.create({
 		data: {
 			...productData,
 			category: { connect: { id: productData.category } },
 		},
 	});
 
+	// create the folder for the product images
+	const imageFolder = await createFolder(newProduct.id);
+
+	// update the product with the image folder id
+	await prisma.product.update({
+		where: { id: newProduct.id },
+		data: { publitioFolderId: imageFolder.id },
+	});
+
 	return redirect(`/admin/proizvodi`);
 };
 
-export const loader = async ({}: LoaderFunctionArgs) => {
+export const loader = async () => {
 	const categories = await prisma.category.findMany({
 		where: { deletedAt: null },
 		select: { id: true, name: true },
