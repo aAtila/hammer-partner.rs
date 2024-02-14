@@ -1,11 +1,6 @@
 import { json, redirect } from '@remix-run/node';
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
-import {
-	Form,
-	useActionData,
-	useLoaderData,
-	useNavigate,
-} from '@remix-run/react';
+import { Form, useLoaderData, useNavigate } from '@remix-run/react';
 import prisma from '~/db/db.server';
 import { Dialog, Transition } from '@headlessui/react';
 import {
@@ -20,7 +15,6 @@ import {
 import { Fragment, useEffect, useState } from 'react';
 import { Button } from '~/components/ui/button';
 import { XIcon } from 'lucide-react';
-import FormErrors from './admin/components/form-errors';
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
@@ -75,7 +69,6 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 export default function ProductDetailsPage() {
 	const { product, categories } = useLoaderData<typeof loader>();
-	// const actionData = useActionData<typeof action>();
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
 	const closeDialog = () => {

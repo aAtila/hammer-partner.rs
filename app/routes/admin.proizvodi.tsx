@@ -61,7 +61,7 @@ export default function ProductPage() {
 								<TableHead>Cena</TableHead>
 								<TableHead>Dostupnost</TableHead>
 								<TableHead>#</TableHead>
-								<TableHead>Kreiran</TableHead>
+								<TableHead>Dodat</TableHead>
 								<TableHead className="text-right"></TableHead>
 							</TableRow>
 						</TableHeader>
@@ -71,9 +71,9 @@ export default function ProductPage() {
 									<TableCell className="font-medium">{product.sku}</TableCell>
 									<TableCell>{product.name}</TableCell>
 									<TableCell>{product.category.name}</TableCell>
-									<TableCell>{product.quantity}</TableCell>
 									<TableCell>{toCurrency(product.price)}</TableCell>
 									<TableCell>{product.availability}</TableCell>
+									<TableCell>{product.quantity}</TableCell>
 									<TableCell>{formatDate(product.createdAt)}</TableCell>
 									<TableCell className="text-right">
 										<div className="flex gap-2">
