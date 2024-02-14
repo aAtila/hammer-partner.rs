@@ -5,10 +5,8 @@ import {
 	json,
 } from '@remix-run/node';
 import { z } from 'zod';
-import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
-import { listImages, uploadImage } from '~/services/publitio.server';
-import { readFileSync } from 'fs';
+import { uploadImage } from '~/services/publitio.server';
 
 const MAX_SIZE = 1024 * 1024 * 3; // 3MB
 
