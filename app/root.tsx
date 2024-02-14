@@ -22,7 +22,6 @@ export default function App() {
 				<Outlet />
 				<ScrollRestoration />
 				<Scripts />
-				<LiveReload />
 				<Toaster />
 			</body>
 		</html>
