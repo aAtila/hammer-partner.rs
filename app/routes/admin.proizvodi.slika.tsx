@@ -7,6 +7,8 @@ import {
 import { z } from 'zod';
 import { useForm } from '@conform-to/react';
 import { parseWithZod } from '@conform-to/zod';
+import { listImages, uploadImage } from '~/services/publitio.server';
+import { readFileSync } from 'fs';
 
 const MAX_SIZE = 1024 * 1024 * 3; // 3MB
 
@@ -19,6 +21,7 @@ const NewImageSchema = z.object({
 			'Image size must be less than 3MB',
 		),
 });
+
 export const action = async ({ request }: ActionFunctionArgs) => {
 	const formData = await unstable_parseMultipartFormData(
 		request,
@@ -29,10 +32,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		schema: NewImageSchema.transform(async (data) => {
 			if (data.image.size <= 0) return z.NEVER;
 			return {
-				image: {
-					contentType: data.image.type,
-					blob: Buffer.from(await data.image.arrayBuffer()),
-				},
+				image: data.image,
 			};
 		}),
 		async: true,
@@ -45,17 +45,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 	const { image } = submission.value;
 
+	await uploadImage(image);
+
 	console.log({ image });
 
 	return null;
 };
 
 export default function Slike() {
-	const [form, fields] = useForm({
-		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: NewImageSchema });
-		},
-	});
+	// const [form, fields] = useForm({
+	// 	onValidate({ formData }) {
+	// 		return parseWithZod(formData, { schema: NewImageSchema });
+	// 	},
+	// });
 
 	return (
 		<>
