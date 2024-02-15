@@ -187,9 +187,6 @@ export default function CreateProductPage() {
 												<Label htmlFor="manufacturer">Proizvođač/Brend:</Label>
 												<Input type="text" name="manufacturer" />
 
-												<Label htmlFor="image">Slika proizvoda:</Label>
-												<Input type="file" name="image" accept="image/*" />
-
 												<Label htmlFor="warranty">
 													Informacije o garanciji:
 												</Label>
