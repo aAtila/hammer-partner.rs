@@ -68,7 +68,14 @@ export default function ProductPage() {
 						<TableBody>
 							{products.map((product) => (
 								<TableRow key={product.id}>
-									<TableCell className="font-medium">{product.sku}</TableCell>
+									<TableCell className="font-medium">
+										<Link
+											prefetch="intent"
+											to={`/admin/proizvodi/${product.slug}`}
+										>
+											{product.sku}
+										</Link>
+									</TableCell>
 									<TableCell>{product.name}</TableCell>
 									<TableCell>{product.category.name}</TableCell>
 									<TableCell>{toCurrency(product.price)}</TableCell>
