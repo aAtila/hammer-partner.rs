@@ -27,6 +27,9 @@ RUN npm ci --include=dev
 # Copy application code
 COPY --link . .
 
+# Generate Prisma Client
+RUN npx prisma generate
+
 # Build application
 RUN npm run build
 
