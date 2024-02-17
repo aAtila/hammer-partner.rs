@@ -1,6 +1,6 @@
 import { json, redirect } from '@remix-run/node';
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
-import { Form, useLoaderData, useNavigate } from '@remix-run/react';
+import { Form, useFetcher, useLoaderData, useNavigate } from '@remix-run/react';
 import prisma from '~/db/db.server';
 import { Dialog, Transition } from '@headlessui/react';
 import {
@@ -14,11 +14,12 @@ import {
 } from '~/components/ui/select';
 import { Fragment, useEffect, useState } from 'react';
 import { Button } from '~/components/ui/button';
-import { XIcon } from 'lucide-react';
+import { Loader2Icon, XIcon } from 'lucide-react';
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
 import { Textarea } from '~/components/ui/textarea';
 import { productFormSchema } from './admin/schemas';
+import { cn } from '~/lib/utils';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
 	const data = Object.fromEntries(await request.formData());
@@ -71,6 +72,9 @@ export default function ProductDetailsPage() {
 	const { product, categories } = useLoaderData<typeof loader>();
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
+	const fetcher = useFetcher();
+	const isLoading = fetcher.state === 'submitting';
+
 	const closeDialog = () => {
 		setOpen(false);
 		navigate('/admin/proizvodi');
@@ -102,10 +106,7 @@ export default function ProductDetailsPage() {
 								leaveTo="translate-x-full"
 							>
 								<Dialog.Panel className="pointer-events-auto w-screen max-w-xl">
-									<Form
-										method="post"
-										className="mt-[1px] flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl"
-									>
+									<div className="mt-[1px] flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
 										<Input type="hidden" name="id" value={product.id} />
 										<div className="bg-white px-8 py-5">
 											<div className="flex items-center justify-between bg-white">
@@ -131,8 +132,56 @@ export default function ProductDetailsPage() {
 												</p>
 											</div>
 										</div>
-										<div className="flex-grow space-y-4 overflow-y-auto px-4 py-6 sm:px-8">
+										<fetcher.Form
+											method="post"
+											className="flex items-center gap-4 px-8 py-4"
+											action="/admin/slike"
+											encType="multipart/form-data"
+										>
+											<input
+												type="hidden"
+												name="folderId"
+												defaultValue={product.publitioFolderId ?? undefined}
+											/>
+											<input
+												type="hidden"
+												name="productId"
+												defaultValue={product.id}
+											/>
+											<Input
+												type="file"
+												name="image"
+												accept="image/*"
+												multiple
+												className="max-w-xs"
+												disabled={isLoading}
+											/>
+											<Button
+												value="images"
+												type="submit"
+												disabled={isLoading}
+												className="relative"
+											>
+												<Loader2Icon
+													className={cn([
+														isLoading ? 'opacity-100' : 'opacity-0',
+														'absolute size-5 animate-spin',
+													])}
+												/>
+												<span
+													className={isLoading ? 'opacity-0' : 'opacity-100'}
+												>
+													Dodaj slike
+												</span>
+											</Button>
+										</fetcher.Form>
+										<Form
+											id="updateProductForm"
+											method="post"
+											className="flex-grow space-y-4 overflow-y-auto px-4 py-6 sm:px-8"
+										>
 											{/* <FormErrors errors={actionData?.errors} /> */}
+											<input type="hidden" name="id" value={product.id} />
 											<div className="mx-auto grid grid-cols-[auto_1fr] items-baseline gap-3">
 												<Label htmlFor="name">Naziv proizvoda:</Label>
 												<Input
@@ -219,10 +268,6 @@ export default function ProductDetailsPage() {
 													name="manufacturer"
 													defaultValue={product.manufacturer ?? undefined}
 												/>
-
-												<Label htmlFor="image">Slika proizvoda:</Label>
-												<Input type="file" name="image" accept="image/*" />
-
 												<Label htmlFor="warranty">
 													Informacije o garanciji:
 												</Label>
@@ -260,7 +305,7 @@ export default function ProductDetailsPage() {
 													</SelectContent>
 												</Select>
 											</div>
-										</div>
+										</Form>
 										<div className="flex flex-shrink-0 justify-end gap-2 px-8 py-4">
 											<Button
 												variant="ghost"
@@ -269,9 +314,16 @@ export default function ProductDetailsPage() {
 											>
 												Otkaži
 											</Button>
-											<Button type="submit">Dodaj</Button>
+											<Button
+												form="updateProductForm"
+												type="submit"
+												value="update"
+												disabled={isLoading}
+											>
+												Izmeni
+											</Button>
 										</div>
-									</Form>
+									</div>
 								</Dialog.Panel>
 							</Transition.Child>
 						</div>

@@ -34,7 +34,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export const loader = async () => {
 	const products = await prisma.product.findMany({
 		where: { deletedAt: null },
-		include: { category: { select: { name: true, slug: true } } },
+		include: {
+			category: { select: { name: true, slug: true } },
+			images: { select: { id: true } },
+		},
 	});
 
 	return { products };
@@ -59,6 +62,7 @@ export default function ProductPage() {
 								<TableHead>Naziv</TableHead>
 								<TableHead>Kategorija</TableHead>
 								<TableHead>Cena</TableHead>
+								<TableHead>Slika</TableHead>
 								<TableHead>Dostupnost</TableHead>
 								<TableHead>#</TableHead>
 								<TableHead>Dodat</TableHead>
@@ -79,6 +83,9 @@ export default function ProductPage() {
 									<TableCell>{product.name}</TableCell>
 									<TableCell>{product.category.name}</TableCell>
 									<TableCell>{toCurrency(product.price)}</TableCell>
+									<TableCell>
+										{product.images ? product.images.length : 0}
+									</TableCell>
 									<TableCell>{product.availability}</TableCell>
 									<TableCell>{product.quantity}</TableCell>
 									<TableCell>{formatDate(product.createdAt)}</TableCell>

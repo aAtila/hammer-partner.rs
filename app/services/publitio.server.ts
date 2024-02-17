@@ -1,10 +1,11 @@
 import crypto from 'crypto';
+import path from 'path';
 
 const PUBLITIO_API_KEY = process.env.PUBLITIO_API_KEY ?? '';
 const PUBLITIO_API_SECRET = process.env.PUBLITIO_API_SECRET ?? '';
 const PUBLITIO_PARENT_ID = 'AelL3Jjb';
 
-type CreateFileResponse = {
+export type CreateFileResponse = {
 	success: boolean;
 	code: number;
 	message: string;
@@ -42,7 +43,9 @@ export const uploadFile = async (
 	formData.append('file', file);
 
 	const authParams = getAuthSignature();
-	const url = `https://api.publit.io/v1/files/create?${authParams}&privacy=1&folder=${folderId}`;
+	const nameWithoutExtension = path.parse(file.name).name;
+
+	const url = `https://api.publit.io/v1/files/create?${authParams}&privacy=1&folder=${folderId}&title=${nameWithoutExtension}&public_id=${nameWithoutExtension}`;
 
 	return fetch(url, {
 		method: 'POST',

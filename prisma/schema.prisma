@@ -46,14 +46,19 @@ model Category {
 }
 
 model Image {
-  id        String    @id @default(cuid())
-  url       String
-  alt       String?
-  width     Int?
-  height    Int?
-  productId String
-  product   Product   @relation(fields: [productId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
+  id         String    @id @default(cuid())
+  publitioId String?
+  name       String?
+  folder     String?
+  folderId   String?
+  extension  String?
+  thumbnail  String?
+  alt        String?
+  width      Int?
+  height     Int?
+  productId  String
+  product    Product   @relation(fields: [productId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
 }
