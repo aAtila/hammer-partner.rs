@@ -55,7 +55,7 @@ export default function ProductPage() {
 												<span className="sr-only">{image.alt}</span>
 												<span className="absolute inset-0 overflow-hidden rounded-md">
 													<img
-														src={`${CDN}/w_130,h_93,c_fill,q_90/${CDN_FOLDER}/${product.id}/${image.url}`}
+														src={`${CDN}/w_130,h_93,c_fill,q_90/${CDN_FOLDER}/${product.id}/${image.name}.webp`}
 														alt=""
 														className="size-full object-cover object-center"
 													/>
@@ -81,7 +81,7 @@ export default function ProductPage() {
 									className="bg-pattern flex items-center border border-gray-100 sm:min-h-[592px] sm:overflow-hidden sm:rounded-lg"
 								>
 									<img
-										src={`${CDN}/w_592,h_592,c_fit,q_99/${CDN_FOLDER}/${product.id}/${image.url}`}
+										src={`${CDN}/w_592,h_592,c_fit,q_99/${CDN_FOLDER}/${product.id}/${image.name}.webp`}
 										alt={image.alt ?? ''}
 										className="size-full object-cover object-center"
 									/>
@@ -113,7 +113,7 @@ export default function ProductPage() {
 											key={rating}
 											className={cn(
 												defaultProduct.rating > rating
-													? 'text-blue-500'
+													? 'text-yellow-500'
 													: 'text-gray-300',
 												'h-5 w-5 flex-shrink-0',
 											)}
@@ -182,7 +182,7 @@ export default function ProductPage() {
 							<div className="mt-10 flex sm:flex-col">
 								<Button
 									type="submit"
-									className="w-full max-w-xs bg-blue-600 font-medium hover:bg-blue-700"
+									className="mx-auto w-full max-w-xs bg-orange-600 font-medium hover:bg-orange-700"
 								>
 									Dodaj u korpu
 								</Button>
