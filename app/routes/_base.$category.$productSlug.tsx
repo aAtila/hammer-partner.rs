@@ -182,7 +182,7 @@ export default function ProductPage() {
 							<div className="mt-10 flex sm:flex-col">
 								<Button
 									type="submit"
-									className="mx-auto w-full max-w-xs bg-orange-600 font-medium hover:bg-orange-700"
+									className="mx-auto w-full bg-orange-600 font-medium hover:bg-orange-700 sm:max-w-xs"
 								>
 									Dodaj u korpu
 								</Button>
