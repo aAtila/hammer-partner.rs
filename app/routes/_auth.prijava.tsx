@@ -30,11 +30,20 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		return json({ errors: validated.error.flatten().fieldErrors } as const);
 	}
 
-	const user = loginUser(validated.data.email, validated.data.password);
+	let user;
+
+	try {
+		user = loginUser(validated.data.email, validated.data.password);
+	} catch (error: any) {
+		return json({ errors: { form: error.message } } as const, { status: 400 });
+	}
+
 	if (user)
 		return redirect(redirectTo, {
 			headers: { 'Set-Cookie': await authCookie.serialize(user.email) },
 		});
+
+	return null;
 };
 
 export default function SignInPage() {
@@ -46,8 +55,15 @@ export default function SignInPage() {
 
 	return (
 		<section className="prose mx-auto flex h-full max-w-md flex-col items-center justify-center">
-			<div className="w-full rounded-lg bg-white p-6 pt-16 text-center shadow-xl">
-				<h1>Prijavi se</h1>
+			<div className="relative w-full rounded-lg bg-white p-6 text-center shadow-xl">
+				{data && 'errors' in data && 'form' in data.errors ? (
+					<div className="absolute left-0 top-0 w-full p-4">
+						<div className="rounded bg-red-100 p-2 text-red-400">
+							{data.errors.form}
+						</div>
+					</div>
+				) : null}
+				<h1 className="mt-12	">Prijavi se</h1>
 				<Form className="mt-16 w-full" method="post" noValidate>
 					<fieldset disabled={isActionSubmission} className="group grid gap-3">
 						<div className="space-y-1.5">
@@ -85,7 +101,7 @@ export default function SignInPage() {
 							readOnly
 							defaultValue={next}
 						/>
-						<SubmitButton label="Prijavi se" />
+						<SubmitButton label="Prijavi se" className="mt-2" />
 					</fieldset>
 				</Form>
 			</div>
