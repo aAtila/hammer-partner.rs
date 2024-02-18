@@ -6,39 +6,57 @@ FROM node:${NODE_VERSION}-slim as base
 
 LABEL fly_launch_runtime="Remix"
 
-# Remix app lives here
+# Install openssl for Prisma
+RUN apt-get update && apt-get install -y openssl
+
+# Install all node_modules, including dev dependencies
+FROM base as deps
+
+RUN mkdir /app
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV="production"
+ADD package.json package-lock.json ./
+RUN npm install --production=false
 
+# Setup production node_modules
+FROM base as production-deps
 
-# Throw-away build stage to reduce size of final image
+RUN mkdir /app
+WORKDIR /app
+
+COPY --from=deps /app/node_modules /app/node_modules
+ADD package.json package-lock.json ./
+RUN npm prune --production
+
+# Build the app
 FROM base as build
 
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install -y build-essential pkg-config python-is-python3
+ENV NODE_ENV=production
 
-# Install node modules
-COPY --link package-lock.json package.json ./
-RUN npm ci --include=dev
+RUN mkdir /app
+WORKDIR /app
 
-# Copy application code
-COPY --link . .
+COPY --from=deps /app/node_modules /app/node_modules
 
-# Generate Prisma Client
+# If we're using Prisma, uncomment to cache the prisma schema
+ADD prisma .
 RUN npx prisma generate
 
-# Build application
+ADD . .
 RUN npm run build
 
-# Remove development dependencies
-RUN npm prune --omit=dev
-
-
-# Final stage for app image
+# Finally, build the production image with minimal footprint
 FROM base
+
+ENV NODE_ENV=production
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY --from=production-deps /app/node_modules /app/node_modules
+
+# Uncomment if using Prisma
+COPY --from=build /app/node_modules/.prisma /app/node_modules/.prisma
 
 # Copy built application
 COPY --from=build /app /app
