@@ -8,6 +8,12 @@ if (secret === 'my-secret') {
 }
 
 export const loginUser = (email: string, password: string) => {
+	if (!email.endsWith('@hammer-partner.rs'))
+		throw new Error('Invalid email or password');
+
+	if (password !== process.env.TEMP_PASSWORD)
+		throw new Error('Invalid email or password');
+
 	return { email };
 };
 
