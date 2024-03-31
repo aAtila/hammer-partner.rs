@@ -14,6 +14,10 @@ export const meta: MetaFunction = () => {
 			content:
 				'Naša ponuda obuhvata široki asortiman vrhunskih proizvoda, od alata i materijala do sudopera, slavina i gvožđarske robe.',
 		},
+		{
+			name: 'google-site-verification',
+			content: 'U9xupBjSgiOJK8HiDXeADfzMvZJiXvzog5JEsbD4cDc',
+		},
 	];
 };
 
@@ -216,7 +220,7 @@ export default function Index() {
 										<img
 											src={collection.imageSrc}
 											alt={collection.imageAlt}
-											className="h-full w-full object-cover object-center"
+											className="size-full object-cover object-center"
 										/>
 									</div>
 									<h3 className="mt-6 text-sm text-gray-500">
@@ -243,7 +247,7 @@ export default function Index() {
 						<img
 							src="/assets/images/featured/hero-image.png"
 							alt=""
-							className="h-full w-full object-cover object-center"
+							className="size-full object-cover object-center"
 						/>
 					</div>
 					<div className="absolute inset-0 bg-white bg-opacity-70" />
@@ -338,7 +342,7 @@ export default function Index() {
 							{values.map((value, idx) => (
 								<li key={idx} className="flex gap-x-3">
 									<CheckCircleIcon
-										className="mt-1 h-5 w-5 flex-none text-indigo-600"
+										className="mt-1 size-5 flex-none text-indigo-600"
 										aria-hidden="true"
 									/>
 									<span>
